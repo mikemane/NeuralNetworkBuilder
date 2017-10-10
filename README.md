@@ -7,9 +7,11 @@ TODOS:
 Feefforward graph: done
 #### Convolutional graph
 #### Recurrent graphs
-..* Simple RNN, LSTM & GRU
-..* Sequence to Sequence with attention.
+
+..1. Simple RNN, LSTM & GRU
+..1. Sequence to Sequence with attention.
 #### GAN graphs
-⋅⋅* MLP 
-..* DCGAN 
-..* Cycle GAN
+
+..1. MLP 
+..1. DCGAN 
+..1. Cycle GAN
