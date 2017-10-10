@@ -1,7 +1,9 @@
 NeuralNetworkBuilder
 ======
 A generic library for building neural network graphs with tensorflow.
+
 TODOS:
+------
 Feefforward graph: done
 Convolutional graph
 Recurrent graphs
