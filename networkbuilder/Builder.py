@@ -13,6 +13,7 @@ class Builder(object):
     self._inputs = None
     self._targets = None
     self._is_training = None
+    self._keep_prob = None
 
   def build_network(self, strategy):
     """
@@ -69,6 +70,8 @@ class Builder(object):
       self.config.target.type, self.config.target.shape, name = "targets"
       )
     self._is_training = tf.placeholder(tf.bool, shape=())
+    # For dropout probabilities
+    self._keep_prob = tf.placeholder(tf.float32, shape=(), name="keep_prob")
     return self._inputs, self._targets
 
   def create_network(self, strategy):

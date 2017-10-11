@@ -48,11 +48,11 @@ def main():
 
         counter += 1
         if (counter % 100) == 0:
-          test_train = mnist.test.images.reshape(-1, 28,28, 1)
+          test_images = mnist.test.images
           test_labels = mnist.test.labels
 
           feed_dict = {
-            network_builder.inputs: test_train,
+            network_builder.inputs: test_images,
             network_builder.targets: test_labels,
             network_builder.is_training: False
           }
