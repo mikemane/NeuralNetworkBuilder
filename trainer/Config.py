@@ -7,7 +7,7 @@ class Config(object):
     input,
     target,
     hidden_sizes, 
-    learning_rate
+    learning_rate,
     ):
     self._learning_rate = learning_rate
     self._input = input
@@ -28,8 +28,6 @@ class Config(object):
     """
     Returns the input size.
     """
-    # if not isinstance(self._input, tuple):
-    #   raise TypeError("Input shape type must be a tuple instead got {}".format(type(self._input))
     return self._input
 
   @property
@@ -37,8 +35,6 @@ class Config(object):
     """
     Returns the target size.
     """
-    # if not isinstance(self._target, tuple):
-    #   raise TypeError("Target type must be tuple")
     return self._target
 
   @property
@@ -46,8 +42,9 @@ class Config(object):
     """
     Returns the hidden sizes.
     """
-    if not isinstance(self._hidden_sizes, list):
-      raise TypeError("Mismatched types")
     return self._hidden_sizes
-  
+
+ 
 Value = namedtuple("Value", ["type", "shape", "cls"])
+FCHidden = namedtuple("FCHidden", ["fc"])
+ConvHidden = namedtuple("ConvHidden", ["conv", "fc"])

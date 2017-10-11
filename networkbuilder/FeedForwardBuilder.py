@@ -8,10 +8,6 @@ class FeedForwardBuilder(Builder):
   Deep Feed forward Builder.
   input --> DFFNN --> optimise(mean(loss(logits, targets))
   """
-  def create_network(self):
-    feed_foward_strategy = FeedForwardStrategy(self)
-    return feed_foward_strategy.build()
-
   def compute_loss(self, logits, targets):
     with tf.name_scope("ff_loss"):
       loss = tf.reduce_mean(
@@ -28,3 +24,9 @@ class FeedForwardBuilder(Builder):
     """
     optimiser = tf.train.AdamOptimizer(self.config.learning_rate).minimize(loss)
     return optimiser
+
+  def accuracy(self, logits, targets):
+    with tf.name_scope("eval"):
+      correct = tf.nn.in_top_k(logits, targets, 1)
+      accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
+    return accuracy

@@ -14,21 +14,22 @@ class Builder(object):
     self._targets = None
     self._is_training = None
 
-  def build_network(self):
+  def build_network(self, strategy):
     """
       Builds the network.
     """
     # Initalse he inputs based on the shape provided.
     inputs, targets = self.initialise_input()
     # Create the network according to the specification
-    logits = self.create_network()
+    logits = self.create_network(strategy)
     # Compute the losses from the inputs and outputs
     loss = self.compute_loss(logits, targets)
     # Optimises the losses
     optimiser = self.optimise(loss)
     #  takes in input sequence and labels and computes the loss
     # train_values(input, data)
-    return loss, optimiser
+    accuracy = self.accuracy(logits, targets)
+    return loss, optimiser, accuracy
 
   @property
   def inputs(self):
@@ -70,11 +71,11 @@ class Builder(object):
     self._is_training = tf.placeholder(tf.bool, shape=())
     return self._inputs, self._targets
 
-  def create_network(self):
+  def create_network(self, strategy):
     """
     Create a network based on the specified information.
     """
-    raise NotImplementedError("Create the neto")
+    return strategy.build()
 
   def compute_loss(self, logits, targets):
     """
@@ -87,9 +88,9 @@ class Builder(object):
     """
     This will optimise the loss.
     """
-    raise NotImplementedError("This will optimise the loss.")
+    return tf.train.AdamOptimizer(self.config.learning_rate).minimize(loss)
 
-  def accuracy(self, loss):
+  def accuracy(self, logits, targets):
     """
     Get the performance of the network.
     """

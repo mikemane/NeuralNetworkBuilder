@@ -8,7 +8,7 @@ from hiddenstrategy.HiddenStrategy import HiddenStrategy
 class FeedForwardStrategy(HiddenStrategy):
 
     def build(self):
-      hidden_sizes = self.network.config.hidden_sizes
+      hidden_sizes = self.network.config.hidden_sizes.fc
       counter = 1
       he_init = tf.contrib.layers.variance_scaling_initializer()
       layer_counter = "hidden{}"
