@@ -22,27 +22,6 @@ mnist = input_data.read_data_sets("/tmp/data")
 
 
 def main():
-  # print(mnist.train.images.shape)
-  # with open(FILENAME, "rb") as f:
-  #   data = pickle.load(f)
-  #   print(data.keys())
-
-  #   for i in range(5):
-  #     print(data["Xs"][i])
-  #     print(data["Ys"][i])
-  # inputs = Value(type=tf.float32, shape=(None, 784), cls=None)
-  # targets = Value(type=tf.int64, shape=(None), cls=10)
-
-
-  # fc_hidden = FCHidden(fc=[300, 150])
-  # learning_rate = 0.0001
-
-  # config = Config(inputs, targets, fc_hidden, learning_rate)
-
-  # feed_foward_network = FeedForwardBuilder(config)
-  # feed_foward_strategy = FeedForwardStrategy(feed_foward_network)
-  # loss, optimiser, accuracy = feed_foward_network.build_network(feed_foward_strategy)
-
   inputs = Value(type=tf.float32, shape=(None, 28, 28, 1), cls = None)
   targets = Value(type=tf.int64, shape=(None), cls = 10)
   learning_rate = 0.0001
