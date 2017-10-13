@@ -1,16 +1,19 @@
 from collections import namedtuple
 
 class Config(object):
+  """
+  Configuration file for building deep neural networks.
+ """
 
   def __init__(
     self, 
-    input,
+    invalue,
     target,
     hidden_sizes, 
     learning_rate,
     ):
     self._learning_rate = learning_rate
-    self._input = input
+    self._input = invalue
     self._target = target
     self._hidden_sizes = hidden_sizes
 
@@ -45,6 +48,24 @@ class Config(object):
     return self._hidden_sizes
 
  
+# Values for the input and the output layers
+# @type: The input or output layers datatype
+# @shape: This is the shape of the input or the output layer.
+# @cls: The output layer size: represents a single integer. 
 Value = namedtuple("Value", ["type", "shape", "cls"])
-FCHidden = namedtuple("FCHidden", ["fc"])
-ConvHidden = namedtuple("ConvHidden", ["conv", "fc"])
+
+# Used to get the layers of the fully connected layers
+# @fc: List of weights for fully connected layer e.g [10, 10 , 4]
+FCHidden = namedtuple("FCHidden", ["weights"])
+
+# Blue print of the convolutional layer
+# @conv_weights: list of convolutional weights [(filter_w, filter_h, channel, size)]
+# @fc_weights: Fully Connected weights [weight] => [100, 50, 2]
+ConvHidden = namedtuple("ConvHidden", ["conv_weights", "fc_weights"])
+
+# Might be used for clarity while building convolutional networks.
+ConvLayer = namedtuple(
+  "ConvLayer", [
+    "filter_w", "filter_h", "channels","filter_size", "strides_w", "stride_h"
+    ]
+  )

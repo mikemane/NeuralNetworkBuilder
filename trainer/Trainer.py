@@ -46,13 +46,13 @@ class Trainer(object):
 
               val_feed_dict = {
                 self.network.inputs: val_train,
-                self.network.targets: val_label
-                self.network.keep_prob: 0,
+                self.network.targets: val_label,
+                self.network.keep_prob: 0.0,
                 self.network.is_training: False
               }
 
               val_accuracy = sess.run(
-                self.network.accuracy, feed_dict : val_feed_dict
+                self.network.accuracy, feed_dict = val_feed_dict
                 )
 
               print("Validation Accuracy: {}".format(val_accuracy))

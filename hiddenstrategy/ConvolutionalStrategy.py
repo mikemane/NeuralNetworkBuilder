@@ -14,8 +14,6 @@ class ConvolutionalStrategy(HiddenStrategy):
     Builds the convolutional neural network.
     input --> conv-layer --> fc --> logits.
     """
-    # Builds the convolutional layers
-    # Builds the fully connected layers
     conv_part = self.build_convolution()
     logits = self.build_fully_connected(conv_part)
     return logits
@@ -33,11 +31,35 @@ class ConvolutionalStrategy(HiddenStrategy):
   def build_convolution(self):
     """
     This builds the convolutional part of the network.
+    input --> conv 
     """
-    raise NotImplementedError("Should Be implemented")
+    raise NotImplementedError("Build Convolution Should Be implemented")
   
+  # def build_fully_connected(self, conv_part):
+  #   """
+  #   this builds the fully connected part.
+  #   """
+  #   raise NotImplementedError("Should Be implemented")
   def build_fully_connected(self, conv_part):
     """
     this builds the fully connected part.
+    conv ---> fc --> logits
     """
-    raise NotImplementedError("Should Be implemented")
+    hidden_sizes = self.network.config.hidden_sizes.conv_weights
+    fc_sizes = self.network.config.hidden_sizes.fc_weights
+
+    hidden_to_fc = self.network.config.input.shape[1] // (len(hidden_sizes) * 2)
+    last_bias = hidden_sizes[-1][3]
+
+    fc = tf.reshape(conv_part, [-1, hidden_to_fc * hidden_to_fc * last_bias])
+
+    for shape in fc_sizes:
+      fc = Conv2d.full_layer(fc, shape)
+      fc = tf.nn.relu(fc)
+      # TODO: Implement the dropout layer in a way.
+      # fc = tf.nn.droput(fc, keep_prob=0.4)
+
+    logits = Conv2d.full_layer(
+      fc, self.network.config.target.cls
+      )
+    return logits

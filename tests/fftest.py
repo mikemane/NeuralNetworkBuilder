@@ -22,7 +22,7 @@ def main():
   """
   inputs = Value(type=tf.float32, shape=(None, 784), cls=None)
   targets = Value(type=tf.int64, shape=(None), cls=10)
-  fc_hidden = FCHidden(fc=[300, 150])
+  fc_hidden = FCHidden(weights=[300, 150])
   learning_rate = 0.0001
 
   config = Config(inputs, targets, fc_hidden, learning_rate)
