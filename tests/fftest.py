@@ -8,7 +8,7 @@ from trainer.Config import Config
 from trainer.Config import Value, FCHidden
 
 from networkbuilder.FeedForwardBuilder import FeedForwardBuilder 
-from hiddenstrategy.FeedForwardStrategy import FeedForwardStrategy
+from hiddenbuilder.fc.FFHiddenBuilder import FFHiddenBuilder
 
 from trainer.Trainer import Trainer
 
@@ -28,8 +28,8 @@ def main():
   config = Config(inputs, targets, fc_hidden, learning_rate)
 
   network_builder = FeedForwardBuilder(config)
-  feed_foward_strategy = FeedForwardStrategy(network_builder)
-  loss, optimiser, accuracy = network_builder.build_network(feed_foward_strategy)
+  hidden_builder = FFHiddenBuilder(network_builder)
+  loss, optimiser, accuracy = network_builder.build_network(hidden_builder)
 
   batch_size = 64
   with tf.Session() as sess:

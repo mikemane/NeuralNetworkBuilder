@@ -8,7 +8,7 @@ from trainer.Config import Config
 from trainer.Config import Value, ConvHidden
 
 from networkbuilder.ConvolutionalBuilder import ConvolutionalBuilder
-from hiddenstrategy.FFConvolutionalStrategy import  FFConvolutionalStrategy
+from hiddenbuilder.cnn.FFConvolutionalBuilder import  FFConvolutionalBuilder
 
 from trainer.Trainer import Trainer
 
@@ -29,15 +29,15 @@ def main():
 
   fc_hidden = [1024, 500]
   c_h = [
-    (1, 1, 1, 32),
-    (1, 1, 32, 64)
+    (7, 7, 1, 32),
+    (7, 7, 32, 64)
   ]
   conv_hidden = ConvHidden(conv_weights=c_h, fc_weights=fc_hidden)
 
   config = Config(inputs, targets, conv_hidden, learning_rate)
 
   network = ConvolutionalBuilder(config)
-  conv2dstrategy = FFConvolutionalStrategy(network)
+  conv2dstrategy = FFConvolutionalBuilder(network)
   loss, optimiser, accuracy = network.build_network(conv2dstrategy)
 
   batch_size = 64

@@ -1,5 +1,5 @@
 
-class HiddenStrategy(object):
+class HiddenBuilder(object):
   """
   Uses a series of hidden strategy to construct a neural network.
   """

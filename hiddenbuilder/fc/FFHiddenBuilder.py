@@ -2,10 +2,10 @@ import tensorflow as tf
 
 from tensorflow.contrib.layers import fully_connected
 from tensorflow.contrib.layers import batch_norm
-from hiddenstrategy.HiddenStrategy import HiddenStrategy
+from hiddenbuilder.HiddenBuilder import HiddenBuilder
 
 
-class FeedForwardStrategy(HiddenStrategy):
+class FFHiddenBuilder(HiddenBuilder):
 
     def build(self):
       hidden_sizes = self.network.config.hidden_sizes.weights
@@ -18,6 +18,8 @@ class FeedForwardStrategy(HiddenStrategy):
         "decay": 0.99,
         "updates_collections": None
         }
+
+    # Testing on the training set, batch normalisation just made the training value worse.
 
       with tf.name_scope("ff_hidden"):
         with tf.contrib.framework.arg_scope(

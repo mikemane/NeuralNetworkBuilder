@@ -1,7 +1,6 @@
 import tensorflow as tf
 
 from networkbuilder.Builder import Builder
-from hiddenstrategy.FeedForwardStrategy import FeedForwardStrategy
 
 class FeedForwardBuilder(Builder):
   """

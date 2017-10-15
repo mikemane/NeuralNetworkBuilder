@@ -1,11 +1,11 @@
 import tensorflow as tf
 
 # from tensorflow.contrib.layers import fully_connected
-from hiddenstrategy.ConvolutionalStrategy import ConvolutionalStrategy 
+from hiddenbuilder.cnn.ConvolutionalBuilder import ConvolutionalBuilder 
 from networkhelpers.Conv import Conv2d
 
 
-class FFConvolutionalStrategy(ConvolutionalStrategy):
+class FFConvolutionalBuilder(ConvolutionalBuilder):
   """
   This is used to build a Feed Forward Neural Network
   """

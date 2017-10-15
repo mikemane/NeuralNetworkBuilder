@@ -1,11 +1,11 @@
 import tensorflow as tf
 
 # from tensorflow.contrib.layers import fully_connected
-from hiddenstrategy.HiddenStrategy import HiddenStrategy
+from hiddenbuilder.HiddenBuilder import HiddenBuilder
 from networkhelpers.Conv import Conv2d
 
 
-class ConvolutionalStrategy(HiddenStrategy):
+class ConvolutionalBuilder(HiddenBuilder):
   """
   Builds a Convolutional Layer by Using the Convolutional Part and the Fully Connected Layer.
   """
