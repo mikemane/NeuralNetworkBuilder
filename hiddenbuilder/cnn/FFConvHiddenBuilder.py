@@ -1,12 +1,13 @@
 import tensorflow as tf
 
 # from tensorflow.contrib.layers import fully_connected
-from hiddenbuilder.cnn.ConvolutionalBuilder import ConvolutionalBuilder 
+from hiddenbuilder.cnn.ConvHiddenBuilder import ConvHiddenBuilder 
 from networkhelpers.Conv import Conv2d
 
 
-class FFConvolutionalBuilder(ConvolutionalBuilder):
+class FFConvHiddenBuilder(ConvHiddenBuilder):
   """
+  Feed forward Conv Hidden Builder
   This is used to build a Feed Forward Neural Network
   """
 

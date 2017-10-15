@@ -7,7 +7,7 @@ from collections import namedtuple
 from trainer.Config import Config
 from trainer.Config import Value, FCHidden
 
-from networkbuilder.FeedForwardBuilder import FeedForwardBuilder 
+from networkbuilder.FFNetworkBuilder import FFNetworkBuilder 
 from hiddenbuilder.fc.FFHiddenBuilder import FFHiddenBuilder
 
 from trainer.Trainer import Trainer
@@ -27,7 +27,7 @@ def main():
 
   config = Config(inputs, targets, fc_hidden, learning_rate)
 
-  network_builder = FeedForwardBuilder(config)
+  network_builder = FFNetworkBuilder(config)
   hidden_builder = FFHiddenBuilder(network_builder)
   loss, optimiser, accuracy = network_builder.build_network(hidden_builder)
 

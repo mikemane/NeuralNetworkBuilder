@@ -1,6 +1,8 @@
 import os, sys
 import tensorflow as tf
 
+from abc import abstractmethod
+
 
 class Builder(object):
   """

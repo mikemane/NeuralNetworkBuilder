@@ -5,7 +5,7 @@ from hiddenbuilder.HiddenBuilder import HiddenBuilder
 from networkhelpers.Conv import Conv2d
 
 
-class ConvolutionalBuilder(HiddenBuilder):
+class ConvHiddenBuilder(HiddenBuilder):
   """
   Builds a Convolutional Layer by Using the Convolutional Part and the Fully Connected Layer.
   """

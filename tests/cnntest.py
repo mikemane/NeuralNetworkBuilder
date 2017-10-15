@@ -7,8 +7,8 @@ from collections import namedtuple
 from trainer.Config import Config
 from trainer.Config import Value, ConvHidden
 
-from networkbuilder.ConvolutionalBuilder import ConvolutionalBuilder
-from hiddenbuilder.cnn.FFConvolutionalBuilder import  FFConvolutionalBuilder
+from networkbuilder.ConvNetworkBuilder import ConvNetworkBuilder
+from hiddenbuilder.cnn.FFConvHiddenBuilder import FFConvHiddenBuilder 
 
 from trainer.Trainer import Trainer
 
@@ -36,9 +36,9 @@ def main():
 
   config = Config(inputs, targets, conv_hidden, learning_rate)
 
-  network = ConvolutionalBuilder(config)
-  conv2dstrategy = FFConvolutionalBuilder(network)
-  loss, optimiser, accuracy = network.build_network(conv2dstrategy)
+  network = ConvNetworkBuilder(config)
+  hidden_builder = FFConvHiddenBuilder(network)
+  loss, optimiser, accuracy = network.build_network(hidden_builder)
 
   batch_size = 64
   with tf.Session() as sess:

@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from networkbuilder.Builder import Builder
 
-class ConvolutionalBuilder(Builder):
+class ConvNetworkBuilder(Builder):
   """
   Convolutional builder
   """

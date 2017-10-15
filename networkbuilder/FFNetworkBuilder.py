@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from networkbuilder.Builder import Builder
 
-class FeedForwardBuilder(Builder):
+class FFNetworkBuilder(Builder):
   """
   Deep Feed forward Builder.
   input --> DFFNN --> optimise(mean(loss(logits, targets))
