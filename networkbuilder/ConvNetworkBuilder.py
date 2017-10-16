@@ -23,7 +23,7 @@ class ConvNetworkBuilder(Builder):
       return loss
 
 
-  def accuracy(self, logits, targets):
+  def calculate_accuracy(self, logits, targets):
     with tf.name_scope("conv_accuracy"):
       correct = tf.nn.in_top_k(logits, targets, 1)
       accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))

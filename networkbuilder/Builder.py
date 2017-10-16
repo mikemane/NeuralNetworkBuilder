@@ -26,13 +26,13 @@ class Builder(object):
     # Create the network according to the specification
     logits = self.create_network(strategy)
     # Compute the losses from the inputs and outputs
-    loss = self.compute_loss(logits, targets)
+    self.loss = self.compute_loss(logits, targets)
     # Optimises the losses
-    optimiser = self.optimise(loss)
+    self.optimiser = self.optimise(self.loss)
     #  takes in input sequence and labels and computes the loss
     # train_values(input, data)
-    accuracy = self.accuracy(logits, targets)
-    return loss, optimiser, accuracy
+    self.accuracy = self.calculate_accuracy(logits, targets)
+    return self.loss, self.optimiser, self.accuracy
 
   @property
   def inputs(self):
@@ -51,6 +51,13 @@ class Builder(object):
     if self._targets == None:
       raise NotImplementedError("Targets Hasnt been set")
     return self._targets
+
+  @property
+  def keep_prob(self):
+    """
+    Keep Probability
+    """
+    return self._keep_prob
 
   @property
   def is_training(self):
@@ -95,7 +102,7 @@ class Builder(object):
     """
     return tf.train.AdamOptimizer(self.config.learning_rate).minimize(loss)
 
-  def accuracy(self, logits, targets):
+  def calculate_accuracy(self, logits, targets):
     """
     Get the performance of the network.
     """

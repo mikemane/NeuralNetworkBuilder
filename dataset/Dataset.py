@@ -1,3 +1,5 @@
+import sys
+
 from collections import namedtuple
 
 class Dataset(object):
@@ -9,15 +11,27 @@ class Dataset(object):
     self._test = None
 
   
-  def next_batch(self):
+  def next_batch(self, dataset):
     """
       A generator function that yields the batch based on the batch size specified.
     """
-    raise NotImplementedError(
-      "Should implement this in a subclass")
+    # print(dataset.x.shape[0])
+    # sys.exit(1)
+    dataset_len = dataset.x.shape[0]
+    for index in range(dataset_len // self.batch_size):
+      start = index * self.batch_size 
+      end = start + self.batch_size
+      yield dataset.x[start: end], dataset.y[start: end]
+
+
   
-  @property
-  def train(self):
+  def set_train(self, train):
+    """
+    Sets the training set
+    """
+    self._train = train
+
+  def get_train(self):
     """
     Returns the training data 
     """
@@ -25,8 +39,13 @@ class Dataset(object):
       raise NotImplementedError("Should Be Implemented in Subclasses")
     return self._train
 
-  @property
-  def val(self):
+  def set_val(self, val):
+    """
+    Sets the validation set property
+    """
+    self._val = val
+
+  def get_val(self):
     """
     Returns the validaiton data of the object.
     """
@@ -34,7 +53,13 @@ class Dataset(object):
       raise NotImplementedError("Should be implemented in Subclasses")
     return self._val
 
-  def test(self):
+  def set_test(self, test):
+    """
+    Set test set
+    """
+    self._test = test
+  
+  def get_test(self):
     """
     Returns the test data.
     """
@@ -47,4 +72,4 @@ class Dataset(object):
 
 
 
-DataValues = namedtuple("DataArgs", ["train", "labels"])
+DataValues = namedtuple("DataValues", ["x", "y"])

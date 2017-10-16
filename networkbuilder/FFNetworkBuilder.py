@@ -24,7 +24,7 @@ class FFNetworkBuilder(Builder):
     optimiser = tf.train.AdamOptimizer(self.config.learning_rate).minimize(loss)
     return optimiser
 
-  def accuracy(self, logits, targets):
+  def calculate_accuracy(self, logits, targets):
     with tf.name_scope("eval"):
       correct = tf.nn.in_top_k(logits, targets, 1)
       accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
