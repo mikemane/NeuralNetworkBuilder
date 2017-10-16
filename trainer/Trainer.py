@@ -4,6 +4,13 @@ from collections import namedtuple
 
 VAL_TRAIN_KEEP_PROB = 0.0
 
+# Trainer Config: This represents the conguration for the trianer file.
+TrainerConfig = namedtuple(
+  "TrainerConfig", [
+    "epochs", "display_after", "keep_prob", "checkpoint_path", "summary_path"
+    ]
+  )
+
 class Trainer(object):
 
   def __init__(self, network, config):
@@ -23,7 +30,7 @@ class Trainer(object):
     """
     Checks how well data is doing based on the val set.
     """
-    print("Test Validation set here")
+    # print("Test Validation set here")
     val_x = val_set.x
     val_y = val_set.y
 
@@ -89,11 +96,6 @@ class Trainer(object):
                 )
               )
             if dataset.get_val() != None:
-              self.check_validation_set(sess, datase500t.get_val())
+              self.check_validation_set(sess, dataset.get_val())
 
 
-TrainerConfig = namedtuple(
-  "TrainerConfig", [
-    "epochs", "display_after", "keep_prob", "checkpoint_path", "summary_path"
-    ]
-  )
