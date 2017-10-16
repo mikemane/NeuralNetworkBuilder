@@ -1,17 +1,24 @@
-NeuralNetworkBuilder
-======
-A generic library for building neural network graphs with tensorflow.
+Neural Network Builder
+===================
 
-TODOS:
-------
-Feefforward graph: done
-#### Convolutional graph
-#### Recurrent graphs
+This is a library for building neural network graphs using tensorflow. The main purpose is to specify the input and hidden shapes and the programme will automatically build the graph and train the outputs.
 
-* Simple RNN, LSTM & GRU
-* Sequence to Sequence with attention.
-#### GAN graphs
+----------
 
-* MLP 
-* DCGAN 
-* Cycle GAN
+
+Current Solutions
+-------------
+FeedForward: **done**
+Convolutional NN: **done**
+Recurrent NN: 
+
+- SimpleRNN 
+- Seq2Seq + Attention 
+
+GAN 
+
+- Simple GAN
+- DC GAN
+- Cycle GAN
+
+
