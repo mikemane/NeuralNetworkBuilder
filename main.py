@@ -17,6 +17,10 @@ from dataset.MNIST import MNIST
 # mnist = input_data.read_data_sets("/tmp/data")
 
 BATCH_SIZE = 10
+LEARNING_RATE = 0.0001
+EPOCHS = 100
+KEEP_PROB = 0.05
+DISPLAY_STEP = 500
 
 def main():
   """
@@ -27,17 +31,16 @@ def main():
   inputs = Value(type=tf.float32, shape=(None, 784), cls=None)
   targets = Value(type=tf.int64, shape=(None), cls=10)
   fc_hidden = FCHidden(weights=[300, 150])
-  learning_rate = 0.0001
 
-  config = Config(inputs, targets, fc_hidden, learning_rate)
+  config = Config(inputs, targets, fc_hidden, LEARNING_RATE)
 
   network_builder = FFNetworkBuilder(config)
   hidden_builder = FFHiddenBuilder(network_builder)
   _ = network_builder.build_network(hidden_builder)
 
   train_config = TrainerConfig(
-          epochs = 100, display_after = 500, 
-          keep_prob = 0.5,checkpoint_path=None, 
+          epochs = EPOCHS, display_after = DISPLAY_STEP, 
+          keep_prob = KEEP_PROB,checkpoint_path=None, 
           summary_path=None
           )
   trainer = Trainer(network_builder, train_config)
