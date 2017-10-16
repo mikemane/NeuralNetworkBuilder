@@ -24,6 +24,6 @@ GAN
 - Cycle GAN
 
 
-Extras
+Extra TODO
 -------------
 GPU Support
