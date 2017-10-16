@@ -8,7 +8,7 @@ class Seq2SeqBuilder(RNNBuilder):
   """
 
 
-  def build(self):
+  def build_rnn_layer(self):
     """
     in --> encoder --> attention --> decoder --> logits
     """
@@ -17,10 +17,8 @@ class Seq2SeqBuilder(RNNBuilder):
       encoder_output, encoder_states
       )
     decoder_output, decoder_state = self.build_decoder(attention_output)
-    logits = self.build_fully_connected_layer(
-      decoder_output, decoder_state
-      )
-    return logits
+    return decoder_output, decoder_state
+
 
   @abstractmethod
   def build_encoder(self):
