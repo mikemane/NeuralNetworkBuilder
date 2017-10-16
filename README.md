@@ -9,7 +9,9 @@ This is a library for building neural network graphs using tensorflow. The main 
 Current Solutions
 -------------
 FeedForward: **done**
+
 Convolutional NN: **done**
+
 Recurrent NN: 
 
 - SimpleRNN 
