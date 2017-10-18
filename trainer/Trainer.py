@@ -3,6 +3,7 @@ import tensorflow as tf
 from collections import namedtuple
 
 VAL_TRAIN_KEEP_PROB = 0.0
+IS_TRAINING = True
 
 # Trainer Config: This represents the conguration for the trianer file.
 TrainerConfig = namedtuple(
@@ -30,20 +31,31 @@ class Trainer(object):
     """
     Checks how well data is doing based on the val set.
     """
-    # print("Test Validation set here")
-    val_x = val_set.x
-    val_y = val_set.y
-
-    val_feed_dict = {
-      self.network.inputs: val_x,
-      self.network.targets: val_y,
-      self.network.keep_prob: VAL_TRAIN_KEEP_PROB,
-      self.network.is_training: False
-    }
+    val_feed_dict = self.construct_feed_dict(
+      val_set.x, val_set.y, VAL_TRAIN_KEEP_PROB, not (IS_TRAINING)
+      )
     val_accuracy = sess.run(
       self.network.accuracy, feed_dict = val_feed_dict
       )
     print("Validation Accuracy: {}".format(val_accuracy))
+  
+  def check_train_set(self, sess, *args):
+    """
+    Train values
+    """
+    train_operations = [self.network.optimiser, self.network.loss]
+    feed_dict = self.construct_feed_dict(*args)
+    return sess.run(train_operations, feed_dict)
+
+
+  def construct_feed_dict(self, x, y, keep_prob, is_training):
+    feed_dict = dict()
+    feed_dict[self.network.inputs] = x
+    feed_dict[self.network.targets] = y
+    feed_dict[self.network.keep_prob] = keep_prob
+    feed_dict[self.network.is_training] = is_training
+    return feed_dict
+
 
 
   def train(self, dataset):
@@ -71,22 +83,10 @@ class Trainer(object):
         for index, (train_x, train_y) in enumerate(
           dataset.next_batch(dataset.get_train())
           ):
-          feed_dict = {
-            self.network.inputs: train_x,
-            self.network.targets: train_y,
-            self.network.is_training: True
-          }
 
-          if self.config.keep_prob != None:
-            feed_dict[self.network.keep_prob] = self.config.keep_prob
-
-          _, loss = sess.run(
-              [
-                self.network.optimiser,
-                self.network.loss
-              ],
-              feed_dict = feed_dict
-              )
+          keep_prob = self.config.keep_prob if self.config.keep_prob is not None else 1.0
+          train_params = [train_x, train_y, keep_prob, IS_TRAINING]
+          optimiser, loss = self.check_train_set(sess, *train_params)
 
           self.counter += 1
           if (self.counter % display_after) == 0:
@@ -97,5 +97,3 @@ class Trainer(object):
               )
             if dataset.get_val() != None:
               self.check_validation_set(sess, dataset.get_val())
-
-
