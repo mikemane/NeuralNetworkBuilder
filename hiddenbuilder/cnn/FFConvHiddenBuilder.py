@@ -15,14 +15,14 @@ class FFConvHiddenBuilder(ConvHiddenBuilder):
     """
     This builds the convolutional part of the network.
     """
-    hidden_sizes = self.network.config.hidden_sizes.conv_weights
+    hidden_sizes = self.hidden_sizes.conv_weights
     counter = 0
     name_formatter = "cnn_layer_{}"
 
     with tf.name_scope(name_formatter.format(counter)):
       with tf.variable_scope("cnn"):
         hidden = Conv2d.conv_layer(
-          self.network.inputs, hidden_sizes[0]
+          self.inputs, hidden_sizes[0]
           )
         hidden = Conv2d.max_pool_2x2(hidden)
 
@@ -30,7 +30,7 @@ class FFConvHiddenBuilder(ConvHiddenBuilder):
         counter += 1
 
         with tf.variable_scope(name_formatter.format(counter)):
-          hidden = Conv2d.conv_layer(hidden, hidden_shape, self.network.is_training)
+          hidden = Conv2d.conv_layer(hidden, hidden_shape, self.is_training)
           hidden = Conv2d.max_pool_2x2(hidden)
 
     return hidden

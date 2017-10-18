@@ -1,9 +1,10 @@
 import tensorflow as tf
+import numpy as np
 
-# from tensorflow.contrib.layers import fully_connected
 from hiddenbuilder.HiddenBuilder import HiddenBuilder
 from networkhelpers.Conv import Conv2d
 
+WITH_MAX_POOL = 2
 
 class ConvHiddenBuilder(HiddenBuilder):
   """
@@ -46,23 +47,17 @@ class ConvHiddenBuilder(HiddenBuilder):
     conv ---> fc --> logits
     """
     with tf.variable_scope("cnn_fc"):
-      hidden_sizes = self.network.config.hidden_sizes.conv_weights
-      fc_sizes = self.network.config.hidden_sizes.fc_weights
-
-      hidden_to_fc = self.network.config.input.shape[1] // (len(hidden_sizes) * 2)
-      last_bias = hidden_sizes[-1][3]
-
-      fc_layer = tf.reshape(conv_part, [-1, hidden_to_fc * hidden_to_fc * last_bias])
+      fc_sizes = self.hidden_sizes.fc_weights
+      out_dim = conv_part.shape[1] * conv_part.shape[2] * conv_part.shape[3]
+      fc_layer = tf.reshape(conv_part, np.asarray([-1, out_dim]))
 
       for index, shape in enumerate(fc_sizes):
         fc_layer = Conv2d.full_layer(fc_layer, shape)
-
-
         fc_layer = tf.nn.relu(fc_layer)
         if index < len(fc_sizes) - 2:
-          fc_layer = tf.nn.dropout(fc_layer, keep_prob=self.network.keep_prob)
+          fc_layer = tf.nn.dropout(fc_layer, keep_prob=self.keep_prob)
 
       logits = Conv2d.full_layer(
-        fc_layer, self.network.config.target.cls
+        fc_layer, self.target_dim
         )
     return logits

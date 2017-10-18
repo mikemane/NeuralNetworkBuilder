@@ -3,7 +3,6 @@ import numpy as np
 
 
 from hiddenbuilder.RNNBuilder import RNNBuilder
-from networkhelpers.rnn.LSTMCell import LSTMCell
 
 class SimpleRNNBuilder(RNNBuilder):
   """

@@ -16,21 +16,19 @@ class Builder(object):
     self._targets = None
     self._is_training = None
     self._keep_prob = None
+    self.optimiser = None
+    self.loss = None
+    self.accuracy = None
 
-  def build_network(self, strategy):
+  def build_network(self, hidden_layer_builder):
     """
       Builds the network.
     """
-    # Initalse he inputs based on the shape provided.
-    inputs, targets = self.initialise_input()
-    # Create the network according to the specification
-    logits = self.create_network(strategy)
-    # Compute the losses from the inputs and outputs
+    _, targets = self.initialise_input()
+    # Should have passed the inputs and the config to the strategy
+    logits = self.create_network(hidden_layer_builder)
     self.loss = self.compute_loss(logits, targets)
-    # Optimises the losses
     self.optimiser = self.optimise(self.loss)
-    #  takes in input sequence and labels and computes the loss
-    # train_values(input, data)
     self.accuracy = self.calculate_accuracy(logits, targets)
     return self.loss, self.optimiser, self.accuracy
 
@@ -83,11 +81,15 @@ class Builder(object):
     self._keep_prob = tf.placeholder(tf.float32, shape=(), name="keep_prob")
     return self._inputs, self._targets
 
-  def create_network(self, strategy):
+  def create_network(self, hidden_builder):
     """
     Create a network based on the specified information.
     """
-    return strategy.build()
+    return hidden_builder(
+        self.inputs, self.config.hidden_sizes, 
+        self.config.target.cls, 
+        self.keep_prob, self.is_training
+    )
 
   def compute_loss(self, logits, targets):
     """

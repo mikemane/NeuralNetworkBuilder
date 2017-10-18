@@ -17,7 +17,7 @@ from dataset.ConvMNIST import ConvMNIST
 BATCH_SIZE = 10
 LEARNING_RATE = 0.0001
 EPOCHS = 100
-KEEP_PROB = 0.4
+KEEP_PROB = 0
 DISPLAY_STEP = 500
 
 def main():
@@ -43,8 +43,8 @@ def main():
   config = Config(inputs, targets, conv_hidden, learning_rate)
 
   network = ConvNetworkBuilder(config)
-  hidden_builder = FFConvHiddenBuilder(network)
-  _ = network.build_network(hidden_builder)
+  hidden = FFConvHiddenBuilder()
+  _ = network.build_network(hidden)
 
 
   train_config = TrainerConfig(

@@ -33,7 +33,7 @@ def main():
   config = Config(inputs, targets, fc_hidden, LEARNING_RATE)
 
   network_builder = FFNetworkBuilder(config)
-  hidden_builder = FFHiddenBuilder(network_builder)
+  hidden_builder = FFHiddenBuilder()
   _ = network_builder.build_network(hidden_builder)
 
   train_config = TrainerConfig(
