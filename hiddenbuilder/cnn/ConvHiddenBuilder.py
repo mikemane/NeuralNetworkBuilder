@@ -45,21 +45,24 @@ class ConvHiddenBuilder(HiddenBuilder):
     this builds the fully connected part.
     conv ---> fc --> logits
     """
-    hidden_sizes = self.network.config.hidden_sizes.conv_weights
-    fc_sizes = self.network.config.hidden_sizes.fc_weights
+    with tf.variable_scope("cnn_fc"):
+      hidden_sizes = self.network.config.hidden_sizes.conv_weights
+      fc_sizes = self.network.config.hidden_sizes.fc_weights
 
-    hidden_to_fc = self.network.config.input.shape[1] // (len(hidden_sizes) * 2)
-    last_bias = hidden_sizes[-1][3]
+      hidden_to_fc = self.network.config.input.shape[1] // (len(hidden_sizes) * 2)
+      last_bias = hidden_sizes[-1][3]
 
-    fc = tf.reshape(conv_part, [-1, hidden_to_fc * hidden_to_fc * last_bias])
+      fc_layer = tf.reshape(conv_part, [-1, hidden_to_fc * hidden_to_fc * last_bias])
 
-    for shape in fc_sizes:
-      fc = Conv2d.full_layer(fc, shape)
-      fc = tf.nn.relu(fc)
-      # TODO: Implement the dropout layer in a way.
-      # fc = tf.nn.droput(fc, keep_prob=0.4)
+      for index, shape in enumerate(fc_sizes):
+        fc_layer = Conv2d.full_layer(fc_layer, shape)
 
-    logits = Conv2d.full_layer(
-      fc, self.network.config.target.cls
-      )
+
+        fc_layer = tf.nn.relu(fc_layer)
+        if index < len(fc_sizes) - 2:
+          fc_layer = tf.nn.dropout(fc_layer, keep_prob=self.network.keep_prob)
+
+      logits = Conv2d.full_layer(
+        fc_layer, self.network.config.target.cls
+        )
     return logits

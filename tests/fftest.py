@@ -13,8 +13,6 @@ from hiddenbuilder.fc.FFHiddenBuilder import FFHiddenBuilder
 from trainer.Trainer import Trainer, TrainerConfig
 from dataset.MNIST import MNIST
 
-# from tensorflow.examples.tutorials.mnist import input_data
-# mnist = input_data.read_data_sets("/tmp/data")
 
 BATCH_SIZE = 10
 LEARNING_RATE = 0.0001

@@ -2,7 +2,13 @@ import sys
 
 from collections import namedtuple
 
+# representing the (train, label) pair of train, val and test data.
+DataValues = namedtuple("DataValues", ["x", "y"])
+
 class Dataset(object):
+  """
+  Dataset class
+  """
 
   def __init__(self, batch_size):
     self.batch_size = batch_size
@@ -35,7 +41,7 @@ class Dataset(object):
     """
     Returns the training data 
     """
-    if self._train == None:
+    if self._train is None:
       raise NotImplementedError("Should Be Implemented in Subclasses")
     return self._train
 
@@ -49,7 +55,7 @@ class Dataset(object):
     """
     Returns the validaiton data of the object.
     """
-    if self._val == None:
+    if self._val is None:
       raise NotImplementedError("Should be implemented in Subclasses")
     return self._val
 
@@ -63,7 +69,7 @@ class Dataset(object):
     """
     Returns the test data.
     """
-    if self._test == None:
+    if self._test is None:
       raise NotImplementedError("Should be implemented in the Subclass")
     return self._test
 
@@ -72,4 +78,3 @@ class Dataset(object):
 
 
 
-DataValues = namedtuple("DataValues", ["x", "y"])

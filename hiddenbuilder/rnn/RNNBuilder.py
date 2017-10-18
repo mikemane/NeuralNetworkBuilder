@@ -1,8 +1,15 @@
+import tensorflow as tf
+
 from abc import abstractmethod
 from hiddenbuilder.HiddenBuilder import HiddenBuilder
+from networkhelpers.rnn.LSTMCell import LSTMCell
+
 
 
 class RNNBuilder(HiddenBuilder):
+  """
+  RNN Builder for building Recurrent Networks.
+  """
 
 
   def build(self):
@@ -28,6 +35,6 @@ class RNNBuilder(HiddenBuilder):
     Creates an RNN Cell based on the specified input
     """
     # Might want to add some orthogonal initializer.
-    return tf.nn.rnn_cell.LSTMCell(hidden_size)
+    return LSTMCell(hidden_size)
 
   
