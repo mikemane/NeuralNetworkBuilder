@@ -11,11 +11,9 @@ class ConvNetworkBuilder(Builder):
   #   # convolutional_strategy = ConvolutionalStrategy()
 
   def compute_loss(self, logits, targets):
-    # loss = tf.nn.softmax_cross_entropy_with_logits(
-    #   labels = targets,
-    #   logits = logits
-    # )
-    # return tf.reduce_mean(loss)
+    """
+    Given logits and targets compute the loss function.
+    """
     with tf.name_scope("loss"):
       xentropy = tf.nn.sparse_softmax_cross_entropy_with_logits(
                     labels=targets, logits=logits)

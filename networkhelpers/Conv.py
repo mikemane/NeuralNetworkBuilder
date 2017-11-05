@@ -52,7 +52,7 @@ class Conv2d(object):
     layer = Conv2d.conv2d(val, W) + b
     batch_norm = Conv2d.batch_norm(layer, bias_param, is_training)
 
-    return tf.nn.relu(batch_norm)
+    return tf.nn.elu(batch_norm)
 
   @staticmethod
   def full_layer(val, size):

@@ -22,6 +22,10 @@ ConvLayer = namedtuple(
     ]
   )
 
+RNNHidden = namedtuple(
+  "RNNLayer", ["rnn_weights", "depth", "fc_weights"]
+)
+
 
 class Config(object):
   """

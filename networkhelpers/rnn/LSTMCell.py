@@ -23,7 +23,7 @@ class LSTMCell(RNNCell):
 
             # Keep W_xh and W_hh separate here as well to reuse initialization methods
             x_size = x.get_shape().as_list()[1]
-            print x.get_shape().as_list()
+            print(x.get_shape().as_list())
             W_xh = tf.get_variable('W_xh',
                 [x_size, 4 * self.num_units],
                 initializer=orthogonal_initializer())

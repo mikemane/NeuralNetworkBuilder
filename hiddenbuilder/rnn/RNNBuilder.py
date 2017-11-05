@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from abc import abstractmethod
 from hiddenbuilder.HiddenBuilder import HiddenBuilder
-from networkhelpers.rnn.LSTMCell import LSTMCell
+from networkhelpers.rnn.LSTMCell import LSTMCell, BNLSTMCell
 
 
 
@@ -35,6 +35,6 @@ class RNNBuilder(HiddenBuilder):
     Creates an RNN Cell based on the specified input
     """
     # Might want to add some orthogonal initializer.
-    return LSTMCell(hidden_size)
+    return tf.nn.rnn_cell.LSTMCell(hidden_size, activation = tf.nn.elu)
 
   
